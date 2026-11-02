@@ -1,0 +1,158 @@
+/* ==========================================================================
+   تجربة ديمو: تصميم صفحة المنتج — "عرض صناعي + داتا شيت"
+   (لسه مش في الثيم؛ يتنقل بعد الموافقة)
+   ========================================================================== */
+
+/* ---------- الهيرو ---------- */
+.pd-hero {
+	padding: 40px 0 72px;
+	background:
+		radial-gradient(circle at 8% 30%, rgb(var(--primary-rgb) / .05), transparent 40%),
+		linear-gradient(180deg, #fff 0%, var(--grey-50) 100%);
+	border-bottom: 1px solid var(--line);
+}
+.pd-hero .breadcrumb { margin-bottom: 28px; }
+.pd-hero-grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: 56px; align-items: center; }
+
+.pd-cat {
+	display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
+	background: rgb(var(--primary-rgb) / .08); color: var(--primary); font-size: .8rem; font-weight: 800; margin-bottom: 16px;
+}
+.pd-cat::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pd-info h1 { font-size: clamp(2.1rem, 4.2vw, 3.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 14px; }
+.pd-lead { font-size: 1.08rem; line-height: 1.85; max-width: 540px; margin-bottom: 26px; }
+
+/* مربعات المواصفات الرئيسية */
+.pd-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-bottom: 28px; }
+.pd-kpi { background: #fff; padding: 16px 18px; }
+.pd-kpi small { display: block; font-size: .74rem; font-weight: 700; letter-spacing: .04em; color: var(--muted); margin-bottom: 2px; }
+.pd-kpi b { display: block; font-size: 1.22rem; font-weight: 900; color: var(--ink); line-height: 1.35; }
+
+.pd-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn-wa { background: #fff; color: #128c4a; border-color: #bfe9cf; }
+.btn-wa:hover { background: #effbf3; border-color: var(--wa); }
+.btn-wa .ico { width: 1.25em; height: 1.25em; }
+.btn-wa:hover .ico { transform: none; }
+
+.pd-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 26px; padding-top: 20px; border-top: 1px dashed var(--line); }
+.pd-trust li { display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--muted); }
+.pd-trust .ico { width: 18px; height: 18px; color: var(--green); }
+.pd-trust b { color: var(--ink); font-weight: 800; }
+
+/* المعرض: شريط مصغرات رأسي + منصة */
+.pd-gallery { display: grid; grid-template-columns: 78px 1fr; gap: 14px; }
+.pd-thumbs { display: flex; flex-direction: column; gap: 10px; max-height: 520px; overflow-y: auto; scrollbar-width: thin; padding: 2px; }
+.pd-thumbs .pg-thumb { flex: none; width: 74px; height: 74px; aspect-ratio: auto; border-radius: 12px; border: 2px solid transparent; background: #fff; box-shadow: 0 0 0 1px var(--line); padding: 0; overflow: hidden; cursor: pointer; transition: box-shadow .2s, transform .2s; }
+.pd-thumbs .pg-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pd-thumbs .pg-thumb:hover { transform: translateY(-2px); }
+.pd-thumbs .pg-thumb.is-active { box-shadow: 0 0 0 2px var(--primary); }
+
+.pd-stage {
+	position: relative; display: flex; align-items: center; justify-content: center;
+	aspect-ratio: 1 / 1; border-radius: 22px; overflow: hidden; border: 1px solid var(--line);
+	background:
+		radial-gradient(circle at 50% 45%, #fff 0%, rgb(255 255 255 / 0) 60%),
+		radial-gradient(rgb(var(--primary-rgb) / .10) 1px, transparent 1.2px) 0 0 / 18px 18px,
+		linear-gradient(180deg, #f6f7fa 0%, #eceff5 100%);
+	box-shadow: var(--shadow-md);
+	cursor: zoom-in;
+}
+.pd-stage::after {
+	content: ""; position: absolute; bottom: 9%; left: 50%; width: 48%; height: 22px; transform: translateX(-50%);
+	background: radial-gradient(ellipse at center, rgb(14 24 52 / .24) 0%, transparent 70%);
+}
+.pd-stage img { position: relative; z-index: 1; max-width: 80%; max-height: 80%; width: auto; object-fit: contain; mix-blend-mode: multiply; transition: opacity .25s, transform .5s var(--ease); }
+.pd-stage:hover img { transform: scale(1.04); }
+.pd-num {
+	position: absolute; top: 14px; inset-inline-end: 22px; font-size: 7rem; font-weight: 900; line-height: 1;
+	color: transparent; -webkit-text-stroke: 1.5px rgb(var(--primary-rgb) / .14); user-select: none;
+}
+.pd-zoom {
+	position: absolute; z-index: 2; bottom: 16px; inset-inline-start: 16px; display: inline-flex; align-items: center; gap: 6px;
+	padding: 6px 12px; border-radius: 999px; background: rgb(255 255 255 / .9); border: 1px solid var(--line);
+	font-size: .78rem; font-weight: 800; color: var(--ink); backdrop-filter: blur(4px);
+}
+.pd-zoom .ico { width: 15px; height: 15px; }
+
+/* ---------- التبويبات اللاصقة ---------- */
+.pd-tabs { position: sticky; top: 76px; z-index: 40; background: rgb(255 255 255 / .96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); transition: box-shadow .3s; }
+.pd-tabs.is-stuck { box-shadow: 0 8px 20px -14px rgb(14 24 52 / .35); }
+.pd-tabs .container { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.pd-tabs .container::-webkit-scrollbar { display: none; }
+.pd-tabs a {
+	position: relative; flex: none; padding: 18px 16px; font-size: .95rem; font-weight: 700; color: var(--muted);
+}
+.pd-tabs a::after { content: ""; position: absolute; inset-inline: 16px; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--primary); transform: scaleX(0); transition: transform .3s var(--ease); }
+.pd-tabs a:hover { color: var(--ink); }
+.pd-tabs a.is-active { color: var(--ink); }
+.pd-tabs a.is-active::after { transform: scaleX(1); }
+
+/* ---------- الأقسام ---------- */
+.pd-section { padding: 88px 0; scroll-margin-top: 140px; }
+.pd-grey { background: var(--grey-50); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pd-head { margin-bottom: 36px; }
+.pd-head h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.4rem); }
+.pd-head.center { text-align: center; }
+.pd-overview { display: grid; grid-template-columns: 1fr 1.6fr; gap: 56px; align-items: start; }
+.pd-overview .pd-head { margin: 0; position: sticky; top: 160px; }
+.pd-prose p { font-size: 1.08rem; line-height: 2; margin-bottom: 1.1em; }
+.pd-prose p:first-child::first-line { color: var(--ink); font-weight: 700; }
+
+/* المميزات كروت مرقمة */
+.pd-feats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: f; }
+.pd-feat { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 24px 22px 22px; overflow: hidden; transition: box-shadow .3s, transform .3s var(--ease); }
+.pd-feat:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.pd-feat::before { content: ""; position: absolute; top: 0; inset-inline-start: 0; width: 44px; height: 3px; background: var(--primary); border-radius: 0 0 3px 3px; }
+.pd-feat-n { display: block; font-size: 2.2rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 1.2px rgb(var(--primary-rgb) / .35); margin-bottom: 14px; }
+.pd-feat p { margin: 0; font-size: 1rem; font-weight: 700; color: var(--ink); line-height: 1.7; }
+
+/* الداتا شيت */
+.pd-sheets { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; align-items: start; }
+.pd-sheet { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.pd-sheet h3 { display: flex; align-items: center; gap: 10px; margin: 0; padding: 16px 22px; font-size: 1.02rem; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, var(--grey-50), #fff); }
+.pd-sheet h3 .ico { width: 18px; height: 18px; color: var(--primary); }
+.pd-rows { margin: 0; }
+.pd-rows > div { display: grid; grid-template-columns: 150px 1fr; gap: 14px; padding: 13px 22px; border-top: 1px dashed var(--line); font-size: .95rem; align-items: baseline; }
+.pd-rows > div:first-child { border-top: 0; }
+.pd-rows dt { color: var(--muted); font-weight: 700; }
+.pd-rows dd { margin: 0; color: var(--ink); font-weight: 800; }
+.pd-chips { display: flex; flex-wrap: wrap; gap: 10px; padding: 20px 22px; margin: 0; }
+.pd-chips li { padding: 8px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--grey-50); font-weight: 800; color: var(--ink); font-size: .95rem; }
+
+/* شريط الطلبات الخاصة */
+.pd-band { background: var(--primary); color: rgb(255 255 255 / .82); padding: 54px 0; position: relative; overflow: hidden; }
+.pd-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(rgb(255 255 255 / .07) 1px, transparent 1.2px) 0 0 / 20px 20px; pointer-events: none; }
+.pd-band-inner { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center; }
+.pd-band-ico { display: inline-flex; width: 64px; height: 64px; border-radius: 18px; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .2); align-items: center; justify-content: center; color: #fff; }
+.pd-band-ico .ico { width: 30px; height: 30px; }
+.pd-band h2 { color: #fff; font-size: clamp(1.3rem, 2.4vw, 1.75rem); margin: 0 0 6px; }
+.pd-band p { margin: 0; }
+.pd-band-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.pd-band .btn-white { color: var(--primary); }
+.pd-band .btn-white:hover { background: var(--grey-100); }
+
+/* منتجات أخرى بنفس كروت الرئيسية */
+.pd-related { margin-top: 0; }
+
+/* ---------- متجاوب ---------- */
+@media (max-width: 960px) {
+	.pd-hero-grid, .pd-overview { grid-template-columns: 1fr; gap: 36px; }
+	.pd-gallery { order: -1; }
+	.pd-overview .pd-head { position: static; }
+	.pd-feats { grid-template-columns: 1fr 1fr; }
+	.pd-sheets { grid-template-columns: 1fr; }
+	.pd-band-inner { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+	.pd-section { padding: 64px 0; }
+}
+@media (max-width: 640px) {
+	.pd-hero { padding: 24px 0 48px; }
+	.pd-gallery { grid-template-columns: 1fr; }
+	.pd-thumbs { order: 2; flex-direction: row; max-height: none; overflow-x: auto; }
+	.pd-thumbs .pg-thumb { width: 64px; height: 64px; }
+	.pd-num { font-size: 4.6rem; }
+	.pd-feats { grid-template-columns: 1fr; }
+	.pd-rows > div { grid-template-columns: 1fr; gap: 2px; }
+	.pd-actions .btn { flex: 1 1 auto; }
+	.pd-tabs a { padding: 14px 12px; font-size: .88rem; }
+	.pd-tabs { top: 76px; }
+}
