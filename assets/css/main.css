@@ -643,3 +643,11 @@ button, input, select, textarea, optgroup, option { font: inherit; color: inheri
 	.detail-table dl > div { grid-template-columns: 1fr; gap: 2px; }
 	.float-whatsapp { width: 50px; height: 50px; bottom: 16px; inset-inline-end: 16px; }
 }
+
+/* Shared keyboard focus remains visible on light and dark surfaces. */
+:focus-visible { outline: 3px solid #1f7a45; outline-offset: 4px; }
+.form-grid input:focus-visible, .form-grid select:focus-visible, .form-grid textarea:focus-visible { outline: 3px solid #1f7a45; outline-offset: 2px; }
+@media (max-width: 960px) {
+  body.nav-open { overflow: hidden; }
+  .js .main-nav[inert] { visibility: hidden; }
+}

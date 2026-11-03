@@ -96,15 +96,15 @@
 
 		<div class="form-card reveal" id="quote-form">
 			<p class="eyebrow">طلب عرض سعر</p>			<h2>أخبرنا عن احتياجاتك</h2>
-			<p class="form-intro">سواء كنتم بحاجة إلى منتجات بمواصفات قياسية أو تصميمات مخصصة، فإن فريقنا جاهز لتقديم الدعم الفني والمساعدة لضمان تلبية جميع احتياجاتكم بكفاءة واحترافية.</p>
+			<p class="form-note" role="note">هذا النموذج للعرض فقط ولا يرسل الطلبات حاليًا. لطلب عرض سعر، تواصل معنا عبر الهاتف أو واتساب.</p><p class="form-intro">سواء كنتم بحاجة إلى منتجات بمواصفات قياسية أو تصميمات مخصصة، فإن فريقنا جاهز لتقديم الدعم الفني والمساعدة لضمان تلبية جميع احتياجاتكم بكفاءة واحترافية.</p>
 						<form class="quote-form" method="post" action="#" onsubmit="event.preventDefault();alert('نسخة عرض: النموذج يعمل بعد تركيب الثيم على ووردبريس.');">
 				<input type="hidden" name="action" value="em_contact">
 				<input type="hidden" id="em_contact_nonce" name="em_contact_nonce" value="d0aea73391" /><input type="hidden" name="_wp_http_referer" value="/contact/" />				<div class="hp-field" aria-hidden="true"><label>الموقع<input type="text" name="em_website" tabindex="-1" autocomplete="off"></label></div>
 				<div class="form-grid">
-					<label>الاسم بالكامل *<input type="text" name="em_name" required placeholder="اكتب اسمك"></label>
-					<label>الشركة / المصنع<input type="text" name="em_company" placeholder="اسم الشركة"></label>
-					<label>الهاتف / واتساب *<input type="tel" name="em_phone" required dir="ltr" placeholder="01xxxxxxxxx"></label>
-					<label>البريد الإلكتروني<input type="email" name="em_email" dir="ltr" placeholder="you@company.com"></label>
+					<label>الاسم بالكامل *<input type="text" name="em_name" autocomplete="name" required placeholder="اكتب اسمك"></label>
+					<label>الشركة / المصنع<input type="text" name="em_company" autocomplete="organization" placeholder="اسم الشركة"></label>
+					<label>الهاتف / واتساب *<input type="tel" name="em_phone" autocomplete="tel" required dir="ltr" placeholder="01xxxxxxxxx"></label>
+					<label>البريد الإلكتروني<input type="email" name="em_email" autocomplete="email" dir="ltr" placeholder="you@company.com"></label>
 					<label>المنتج المطلوب
 						<select name="em_product">
 							<option value="">اختر المنتج</option>

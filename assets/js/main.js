@@ -21,32 +21,51 @@
 		onScroll();
 	}
 
-	/* Mobile menu */
+	/* Mobile menu: keep hidden links out of keyboard navigation. */
 	var toggle = document.querySelector('.nav-toggle');
 	var body = document.body;
-	if (toggle) {
+	var nav = document.querySelector('.main-nav');
+	var mobile = window.matchMedia('(max-width: 960px)');
+	if (toggle && nav) {
+		function setMenu(open, restoreFocus) {
+			open = open && mobile.matches;
+			body.classList.toggle('nav-open', open);
+			toggle.setAttribute('aria-expanded', String(open));
+			toggle.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة');
+			nav.inert = mobile.matches && !open;
+			if (restoreFocus) toggle.focus();
+		}
 		toggle.addEventListener('click', function () {
-			var open = body.classList.toggle('nav-open');
-			toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+			setMenu(!body.classList.contains('nav-open'));
 		});
 		document.addEventListener('click', function (e) {
-			if (body.classList.contains('nav-open') && !e.target.closest('.main-nav') && !e.target.closest('.nav-toggle')) {
-				body.classList.remove('nav-open');
-				toggle.setAttribute('aria-expanded', 'false');
+			if (body.classList.contains('nav-open') && !nav.contains(e.target) && !toggle.contains(e.target)) setMenu(false, true);
+		});
+		document.addEventListener('keydown', function (e) {
+			if (!body.classList.contains('nav-open')) return;
+			if (e.key === 'Escape') { e.preventDefault(); setMenu(false, true); }
+			if (e.key !== 'Tab') return;
+			var controls = [toggle].concat(Array.prototype.slice.call(nav.querySelectorAll('a[href], button')).filter(function (el) { return el.getClientRects().length; }));
+			var current = controls.indexOf(document.activeElement);
+			if (current < 0 || (!e.shiftKey && current === controls.length - 1) || (e.shiftKey && current === 0)) {
+				e.preventDefault();
+				controls[e.shiftKey ? controls.length - 1 : 0].focus();
 			}
 		});
+		mobile.addEventListener('change', function () { setMenu(false); });
+		setMenu(false);
 		document.querySelectorAll('.nav-menu .menu-item-has-children > a').forEach(function (a) {
+			a.setAttribute('aria-expanded', 'false');
 			a.addEventListener('click', function (e) {
-				if (window.innerWidth > 960) return;
-				var li = a.parentElement;
-				if (!li.classList.contains('sub-open')) {
+				if (!mobile.matches) return;
+				if (!a.parentElement.classList.contains('sub-open')) {
 					e.preventDefault();
-					li.classList.add('sub-open');
+					a.parentElement.classList.add('sub-open');
+					a.setAttribute('aria-expanded', 'true');
 				}
 			});
 		});
 	}
-
 	/* Reveal on scroll */
 	var items = document.querySelectorAll('.reveal');
 	if ('IntersectionObserver' in window) {
